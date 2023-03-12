@@ -1,4 +1,4 @@
-import { Form, Button, Image, InputNumber, Table, Input, Modal, Radio, Select } from 'antd';
+import { Form, Button, Image, Table, Input, Modal, Radio, Select } from 'antd';
 import { useState } from 'react';
 import originData from './data.json'
 
@@ -9,58 +9,55 @@ const Directory = () => {
     {
       title: 'Profile Image',
       dataIndex: 'avatar',
-      width: '10',
-      render: (row) => (
-        <img src={`${row.avatar}`}></img>
-      ),
+      // width: '10%',
       render: (url, _) => <img src={`${url}`} />
     },
     {
       title: 'First Name',
       dataIndex: 'firstName',
-      width: '15',
+      width: '15%',
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
     },
     {
       title: 'Last Name',
       dataIndex: 'lastName',
-      width: '15',
+      width: '15%',
       sorter: (a, b) => a.lastName.localeCompare(b.lastName),
     },
     {
       title: 'Title',
       dataIndex: 'title',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.title.localeCompare(b.title),
     },
     {
       title: 'Email',
       dataIndex: 'email',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
       title: 'Phone',
       dataIndex: 'phone',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.phone.localeCompare(b.phone),
     },
     {
       title: 'Organization',
       dataIndex: 'organization',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.organization.localeCompare(b.organization),
     },
     {
       title: 'Department',
       dataIndex: 'department',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.department.localeCompare(b.department),
     },
     {
       title: 'Address',
       dataIndex: 'address',
-      width: '10',
+      width: '10%',
       sorter: (a, b) => a.address.localeCompare(b.address),
     },
   ];
@@ -76,7 +73,7 @@ const Directory = () => {
     setIsModalOpen(false);
   };
   return (
-    <>
+    <div style={{margin: "20px auto", padding: "0 20px"}}>
       <Form
         labelCol={{
           span: 4,
@@ -91,15 +88,15 @@ const Directory = () => {
         initialValues={{
           searchBy: 'userName'
         }}
-        onFinish={(val) => {
+        onFinish={async (val) => {
           if (!val.keyword) {
-            setData(originData);
+            await setData(originData);
             return;
           }
           switch (val.searchBy) {
             case "userName":
               
-              setData(data.filter((row) => (`${row.firstName} ${row.lastName}`).search(val.keyword) > -1))
+              setData(originData.filter((row) => (`${row.firstName} ${row.lastName}`).search(val.keyword) > -1))
               break;
             case "jobTitle":
               setData(data.filter((row) => row.title.search(val.keyword) > -1))
@@ -226,7 +223,7 @@ const Directory = () => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Edit
+              Save
             </Button>
             <Button type="back" onClick={handleCancel} style={{marginLeft: 40}}>
               Cancel
@@ -234,7 +231,7 @@ const Directory = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 export default Directory;
